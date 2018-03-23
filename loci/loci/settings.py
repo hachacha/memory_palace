@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'loci.urls'
+MEDIA_ROOT = 'loci/uploads/'
 
 TEMPLATES = [
     {
