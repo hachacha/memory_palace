@@ -7,6 +7,7 @@ from django.utils.crypto import get_random_string
 class Image(models.Model):
 	file = models.FileField(storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='images', default='settings.MEDIA_ROOT/images/')
 	created = models.DateTimeField('date published')
+	
 	def __str__(self):
 		return self.file.name	
 

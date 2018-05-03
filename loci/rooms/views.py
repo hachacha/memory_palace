@@ -14,10 +14,12 @@ def detail(request, room_id):
     # }
 	try:
 		room = Room.objects.get(pk=room_id)
-		print(room)
+		wrs = Words_Room_Style.objects.select_related('room')
+		# w_styles = room.text.all()
+		# print(w_styles)
 	except Room.DoesNotExist:
 		raise Http404("Room does not exist")
-	return render(request, 'detail.html', {'room': room})
+	return render(request, 'detail.html', {'room': room,'wrs':wrs})
 	# template = loader.get_template('index.html')
 	# context = {
 	# 	'room_images_list' : 

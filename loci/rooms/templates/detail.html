@@ -1,11 +1,21 @@
-indhi i am a template
+in detail template
 
 {{room.id}}
 
 
     {% for image in room.images.all %}
-    yeah
-    <img src="/{{image.file.name}}"/>
-    {%endfor%}
+	    yeah
+	    <img src="/uploads/{{image.file.name}}"/>
+    {% endfor %}
 
-    detail
+    {% for text in room.text.all %}
+    	{% for styles in wrs %}
+    	
+    		{% if styles.words.id == text.id %}
+    			<p style="color:{{styles.color}};">{{text}}</p>
+    		{%else%}
+    			<p>{{text}}. it did not come with or something </p>
+    		{% endif %}
+
+    	{% endfor %}
+    {% endfor %}
