@@ -6,6 +6,7 @@ from rooms.models import Room, Image, Image_Room_Style, Words, Words_Room_Style
 from loci.settings import DERIVE_SET 
 
 from random import randint
+import datetime
 
 def clear_session(request):
 	request.session.flush()
@@ -22,24 +23,35 @@ def room_middleware(request):
 	else:
 		return False
 	#set the derive cookie. 
-	if 'derive' not in request.COOKIES:
+	if 'derive' not in request:
+		response = HttpResponse('here we go')
 	# if  sesh['derive'] == None:
 		#get length of derive_set and put that in there.
 		derive = randint(0,(len(DERIVE_SET)-1))
-		request.COOKIES['derive'] = derive
-		request.COOKIES['derive_path']  = DERIVE_SET[ derive ]
-		return True
+		max_age = 365 * 24 * 60 * 60  # 10 years
+		expires = datetime.datetime.now() + datetime.timedelta(seconds=max_age)
+		response.set_signed_cookie(key='derive',value=derive, expires=expires.strftime("%a, %d-%b-%Y %H:%M:%S GMT"), max_age=max_age)
+		response.set_signed_cookie(key='derive_path',value = ', '.join([str(x) for x in DERIVE_SET[ derive ]]), expires=expires.strftime("%a, %d-%b-%Y %H:%M:%S GMT"), max_age=max_age )
+		return response
 
 def index(request):
-	if room_middleware(request) is False:
+	response = room_middleware(request)
+	if  response is False:
 		return HttpResponse('you must allow cookies')
-	return render(request,'index.html')
+
+	# return render(request,'index.html')
+	return response
 
 
-def detail(request, room_id):
-	
+def detail(request, room_iter):
+
 	try:
-		room = Room.objects.get(pk=room_id)
+
+		split_derive = request.get_signed_cookie('derive_path').split(',')
+
+		the_room = split_derive[room_iter-1]
+		room = Room.objects.get(pk=the_room)
+
 		wrs = Words_Room_Style.objects.select_related('room')
 		# w_styles = room.text.all()
 		# print(w_styles)
