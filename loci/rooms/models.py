@@ -34,7 +34,7 @@ class Words_Room_Style(models.Model):
 	words = models.ForeignKey('Words', on_delete=models.CASCADE)
 	color = models.CharField(max_length=7,default="#000000")
 	size = models.IntegerField(default=1)#should be in EM
-	style = models.CharField(max_length=8)
+	style = models.CharField(max_length=8, default='')
 	marquee = models.BooleanField(default=False)
 
 
@@ -59,7 +59,7 @@ class Marquee_Style(models.Model):
 class Room(models.Model):
 	images = models.ManyToManyField(Image, blank=True)
 	text = models.ManyToManyField(Words, blank=True)
-	styles = models.ForeignKey('Gen_Room_Style', on_delete=models.CASCADE, blank=True)
+	# styles = models.ForeignKey('Gen_Room_Style', on_delete=models.CASCADE, blank=True, default=None)
 	created = models.DateTimeField('date published', auto_now_add=True)
 
 class Static_Room(models.Model):
