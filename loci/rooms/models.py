@@ -33,6 +33,8 @@ class Words_Room_Style(models.Model):
 	room = models.ForeignKey('Room', on_delete=models.CASCADE)
 	words = models.ForeignKey('Words', on_delete=models.CASCADE)
 	color = models.CharField(max_length=7,default="#000000")
+	size = models.IntegerField(default=1)#should be in EM
+	style = models.CharField(max_length=8)
 
 
 	class Meta:
