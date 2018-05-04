@@ -8,33 +8,36 @@ from loci.settings import DERIVE_SET
 from random import randint
 
 def clear_session(request):
-	del request.session['derive']
-	del request.session['derive_path']
+	request.session.flush()
 
 
 	return HttpResponse('all clear capn')
 
 def room_middleware(request):
-	# sesh = request.session
-
-	if 'derive' not in request.session:
+	
+	request.session.set_test_cookie()
+	if request.session.test_cookie_worked():
+		request.session.delete_test_cookie()
+		# :)
+	else:
+		return False
+	#set the derive cookie. 
+	if 'derive' not in request.COOKIES:
 	# if  sesh['derive'] == None:
 		#get length of derive_set and put that in there.
 		derive = randint(0,(len(DERIVE_SET)-1))
-		request.session['derive'] = derive
-		request.session['derive_path']  = DERIVE_SET[ derive ]
+		request.COOKIES['derive'] = derive
+		request.COOKIES['derive_path']  = DERIVE_SET[ derive ]
+		return True
 
 def index(request):
-	room_middleware(request)
-
+	if room_middleware(request) is False:
+		return HttpResponse('you must allow cookies')
 	return render(request,'index.html')
-	# return HttpResponse("go to specific room jesus. this should redirect.")
+
 
 def detail(request, room_id):
-	# template = loader.get_template('polls/index.html')
-    # context = {
-    #     'latest_question_list': latest_question_list,
-    # }
+	
 	try:
 		room = Room.objects.get(pk=room_id)
 		wrs = Words_Room_Style.objects.select_related('room')
