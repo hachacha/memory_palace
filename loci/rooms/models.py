@@ -35,6 +35,7 @@ class Words_Room_Style(models.Model):
 	color = models.CharField(max_length=7,default="#000000")
 	size = models.IntegerField(default=1)#should be in EM
 	style = models.CharField(max_length=8)
+	marquee = models.BooleanField(default=False)
 
 
 	class Meta:

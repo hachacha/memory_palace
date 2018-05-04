@@ -122,3 +122,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/images/'
+
+#PROJECT SPECIFIC CONST VARS
+
+# NUM_OF_ROOMS = 5
+# NUM_OF_DERIVES = 3
+#^^doesn't matter just yet because i am doing this manually.
+
+DERIVE_SET = {  1:[1,2,3,4,5],
+                2:[4,3,5,1,2],
+                3:[5,1,4,2,3],
+            }
+
