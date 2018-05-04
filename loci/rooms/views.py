@@ -3,9 +3,32 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 from rooms.models import Room, Image, Image_Room_Style, Words, Words_Room_Style
+from loci.settings import DERIVE_SET 
+
+from random import randint
+
+def clear_session(request):
+	del request.session['derive']
+	del request.session['derive_path']
+
+
+	return HttpResponse('all clear capn')
+
+def room_middleware(request):
+	# sesh = request.session
+
+	if 'derive' not in request.session:
+	# if  sesh['derive'] == None:
+		#get length of derive_set and put that in there.
+		derive = randint(0,(len(DERIVE_SET)-1))
+		request.session['derive'] = derive
+		request.session['derive_path']  = DERIVE_SET[ derive ]
 
 def index(request):
-	return HttpResponse("Hello, world. You're at the rooms.")
+	room_middleware(request)
+
+	return render(request,'index.html')
+	# return HttpResponse("go to specific room jesus. this should redirect.")
 
 def detail(request, room_id):
 	# template = loader.get_template('polls/index.html')
