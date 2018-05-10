@@ -86,7 +86,7 @@ class Words(models.Model):
 class Words_Style(models.Model):
 	words = models.ForeignKey('Words', on_delete=models.CASCADE)
 	#default color as rgba xxx,xxx,xxx append alpha from opacity when return
-	color = models.CharField(default='black',blank=True, max_length=13)
+	color = models.CharField(default='0,0,0',blank=True, max_length=13)
 	#if choosing to have a color increase then do so by x amount (int)
 	color_r_int = models.IntegerField(default=0,blank=True)
 	#red color is 0-255 max
@@ -137,7 +137,8 @@ class Marquee_Style(models.Model):
 	words = models.ForeignKey('Words',on_delete=models.CASCADE, blank=True, null=True)
 	behavior = models.CharField(max_length=24, default="scroll")
 	direction = models.CharField(max_length=18,default="left")
-	scrollamount = IntegerRangeField(default='(1, 5)',
+	scrollamount = models.IntegerField(default=1)
+	scrollamount_range = IntegerRangeField(default='(1, 50)',
 								 blank=True,
 								 null=True,
 								 validators=[
@@ -145,7 +146,8 @@ class Marquee_Style(models.Model):
 									RangeMaxValueValidator(5)
 								]
 					)
-	scrolldelay = IntegerRangeField(default='(1, 5)',
+	scrolldelay = models.IntegerField(default=1)
+	scrolldelay_range = IntegerRangeField(default='(1, 50)',
 								 blank=True,
 								 null=True,
 								 validators=[

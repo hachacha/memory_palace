@@ -10,12 +10,27 @@ in detail template
 
     {% for text in room.text.all %}
     	{% for styles in wrs %}
-    	
-    		{% if styles.words.id == text.id %}
-    			<p style="color:{{styles.color}};">{{text}}</p>
-    		{%else%}
-    			<p>{{text}}. it did not come with or something </p>
-    		{% endif %}
+            {%for m in marq %}
+        		{%if m.words.id == text.id %}
+                    <marquee scrollamount={{m.scrollamount}} >
+                {%else%}
+                <!-- nothing haha omg! -->
+                {% endif %}<!-- endiff on marquee -->
+                {% if styles.words.id == text.id %}
+        			<p style="color:rgba({{styles.color}});">{{text}}</p>
+        		{%else%}
+        			<p>{{text}}. it did not come with or something </p>
+        		{% endif %}<!-- endif on words style and text -->
 
+                {%if m.words.id == text.id %}
+                    </marquee>
+                {%else%}
+                <!-- nothing haha omg! -->
+                {% endif %}<!-- endiff on marquee -->
+
+                    
+                
+
+            {% endfor %}
     	{% endfor %}
     {% endfor %}

@@ -54,12 +54,11 @@ def detail(request, room_iter):
 
 		wrs = Words_Style.objects.select_related('words')
 		marq = Marquee_Style.objects.select_related('words')
-		print(marq)
 		# w_styles = room.text.all()
 		# print(w_styles)
 	except Room.DoesNotExist:
 		raise Http404("Room does not exist")
-	return render(request, 'detail.html', {'room': room,'wrs':wrs})
+	return render(request, 'detail.html', {'room': room,'wrs':wrs, 'marq':marq})
 	# template = loader.get_template('index.html')
 	# context = {
 	# 	'room_images_list' : 
