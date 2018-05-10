@@ -17,7 +17,7 @@ class Image(models.Model):
 
 class Image_Style(models.Model):
 	image = models.ForeignKey('Image', on_delete=models.CASCADE)
-	cur_width = models.IntegerField(blank=True,default=0)
+	width = models.IntegerField(blank=True,default=0)
 	width_range = IntegerRangeField(default='(1, 101)',
 								 blank=True,
 								 validators=[
@@ -25,7 +25,7 @@ class Image_Style(models.Model):
 									RangeMaxValueValidator(100)
 								]
 				)
-	cur_height = models.IntegerField(blank=True, default=0)
+	height = models.IntegerField(blank=True, default=0)
 	height_range = IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
@@ -65,7 +65,7 @@ class Image_Style(models.Model):
 									RangeMaxValueValidator(100)
 								]
 					)
-	cur_opacity = models.FloatField(blank=True, default=1)
+	opacity = models.FloatField(blank=True, default=1)
 	opacity_range = FloatRangeField(default='(0.1, 1.1)',
 								 blank=True,
 								 validators=[
@@ -86,7 +86,7 @@ class Words(models.Model):
 class Words_Style(models.Model):
 	words = models.ForeignKey('Words', on_delete=models.CASCADE)
 	#default color as rgba xxx,xxx,xxx append alpha from opacity when return
-	cur_color = models.CharField(default='black',blank=True, max_length=13)
+	color = models.CharField(default='black',blank=True, max_length=13)
 	#if choosing to have a color increase then do so by x amount (int)
 	color_r_int = models.IntegerField(default=0,blank=True)
 	#red color is 0-255 max
@@ -114,7 +114,7 @@ class Words_Style(models.Model):
 								]
 					)
 
-	cur_size = models.IntegerField(default=1, blank=True)
+	size = models.IntegerField(default=1, blank=True)
 	size_range = IntegerRangeField(default='(1, 10)',
 								 blank=True,
 								 validators=[
