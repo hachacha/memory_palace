@@ -12,7 +12,7 @@ in detail template
     	{% for styles in wrs %}
             {%for m in marq %}
         		{%if m.words.id == text.id %}
-                    <marquee scrollamount={{m.scrollamount}} >
+                    <marquee scrollamount={{m.scrollamount}} direction={{m.direction}} height=100% width=100% >
                 {%else%}
                 <!-- nothing haha omg! -->
                 {% endif %}<!-- endiff on marquee -->
