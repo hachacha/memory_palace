@@ -9,7 +9,7 @@ from django.contrib.postgres.validators import RangeMinValueValidator, RangeMaxV
 
 class Image(models.Model):
 	file = models.FileField(storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='images', default='settings.MEDIA_ROOT/images/')
-	created = models.DateTimeField('date published')
+	created = models.DateTimeField('date published', auto_now_add=True)
 
 	def __str__(self):
 		return self.file.name	
