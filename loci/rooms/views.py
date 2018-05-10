@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from rooms.models import Room, Image, Image_Room_Style, Words, Words_Room_Style
+from rooms.models import Room, Image, Image_Room_Style, Words, Words_Style, Marquee_Style
 from loci.settings import DERIVE_SET 
 
 from random import randint
@@ -52,7 +52,9 @@ def detail(request, room_iter):
 		the_room = split_derive[room_iter-1]
 		room = Room.objects.get(pk=the_room)
 
-		wrs = Words_Room_Style.objects.select_related('room')
+		wrs = Words_Style.objects.select_related('words')
+		marq = Marquee_Style.objects.select_related('words')
+		print(marq)
 		# w_styles = room.text.all()
 		# print(w_styles)
 	except Room.DoesNotExist:

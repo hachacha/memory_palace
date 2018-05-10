@@ -92,7 +92,7 @@ class Words_Style(models.Model):
 									RangeMaxValueValidator(10)
 								]
 					)
-	style = models.CharField(max_length=8, default='')
+	style = models.CharField(max_length=8, default='',blank=True)
 	marquee = models.BooleanField(default=False)
 
 class Gen_Room_Style(models.Model):
@@ -103,12 +103,13 @@ class Gen_Room_Style(models.Model):
 # 	pass
 
 class Marquee_Style(models.Model):
-	image = models.ForeignKey('Image',on_delete=models.CASCADE, blank=True)
-	words = models.ForeignKey('Words',on_delete=models.CASCADE, blank=True)
+	image = models.ForeignKey('Image',on_delete=models.CASCADE, blank=True, null=True)
+	words = models.ForeignKey('Words',on_delete=models.CASCADE, blank=True, null=True)
 	behavior = models.CharField(max_length=24, default="scroll")
 	direction = models.CharField(max_length=18,default="left")
 	scrollamount = IntegerRangeField(default='(1, 5)',
 								 blank=True,
+								 null=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(5)
@@ -116,6 +117,7 @@ class Marquee_Style(models.Model):
 					)
 	scrolldelay = IntegerRangeField(default='(1, 5)',
 								 blank=True,
+								 null=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(5)
