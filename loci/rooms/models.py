@@ -17,49 +17,56 @@ class Image(models.Model):
 
 class Image_Style(models.Model):
 	image = models.ForeignKey('Image', on_delete=models.CASCADE)
-	width = IntegerRangeField(default='(1, 101)',
+	cur_width = models.IntegerField(blank=True,default=0)
+	width_range = IntegerRangeField(default='(1, 101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 				)
-	height = IntegerRangeField(default='(1,101)',
+	cur_height = models.IntegerField(blank=True, default=0)
+	height_range = IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 				)
-	border_radius_tl = IntegerRangeField(default='(1,101)',
+	brads_tl = models.IntegerField(blank=True,default=0)
+	brads_tl_range = IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 					)
-	border_radius_tr =IntegerRangeField(default='(1,101)',
+	brads_tr = models.IntegerField(blank=True,default=0)
+	brads_tr_range =IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 					)
-	border_radius_bl = IntegerRangeField(default='(1,101)',
+	brads_bl = models.IntegerField(blank=True,default=0)
+	brads_bl_range = IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 					)
-	border_radius_br = IntegerRangeField(default='(1,101)',
+	brads_br = models.IntegerField(blank=True,default=0),
+	brads_br_range = IntegerRangeField(default='(1,101)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
 									RangeMaxValueValidator(100)
 								]
 					)
-	opacity = FloatRangeField(default='(0.1, 1.1)',
+	cur_opacity = models.FloatField(blank=True, default=1)
+	opacity_range = FloatRangeField(default='(0.1, 1.1)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(0.1), 
@@ -78,14 +85,37 @@ class Words(models.Model):
 	
 class Words_Style(models.Model):
 	words = models.ForeignKey('Words', on_delete=models.CASCADE)
-	color = IntegerRangeField(default='(0, 255)',
+	#default color as rgba xxx,xxx,xxx append alpha from opacity when return
+	cur_color = models.CharField(default='black',blank=True, max_length=13)
+	#if choosing to have a color increase then do so by x amount (int)
+	color_r_int = models.IntegerField(default=0,blank=True)
+	#red color is 0-255 max
+	color_range_r = IntegerRangeField(default='(0, 255)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(0), 
 									RangeMaxValueValidator(255)
 								]
 					)
-	size = IntegerRangeField(default='(1, 10)',
+	color_g_int = models.IntegerField(default=0,blank=True)
+	color_range_g = IntegerRangeField(default='(0, 255)',
+								 blank=True,
+								 validators=[
+									RangeMinValueValidator(0), 
+									RangeMaxValueValidator(255)
+								]
+					)
+	color_b_int = models.IntegerField(default=0,blank=True)
+	color_range_b = IntegerRangeField(default='(0, 255)',
+								 blank=True,
+								 validators=[
+									RangeMinValueValidator(0), 
+									RangeMaxValueValidator(255)
+								]
+					)
+
+	cur_size = models.IntegerField(default=1, blank=True)
+	size_range = IntegerRangeField(default='(1, 10)',
 								 blank=True,
 								 validators=[
 									RangeMinValueValidator(1), 
